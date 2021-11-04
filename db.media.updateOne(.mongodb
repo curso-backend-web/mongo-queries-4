@@ -1,0 +1,121 @@
+db.media.updateOne(
+  { Titulo:"Matrix3"},
+  {$set: 
+{"tipo": "DVD",
+ "Titulo": "Matrix",
+ "estreno": 1999,
+ "genero":"accion"
+}}
+)
+
+
+db.media.insertOne({
+  "tipo": "Libro",
+  "Titulo": "Constantinopla",
+  "capitulos":12,
+  "leidos":3
+})
+
+
+
+
+db.media.updateOne(
+  {Titulo: "Constantinopla"},
+  {
+    $inc:{leidos:5}
+  }
+)
+
+db.media.findAndModify(
+  {query:{Titulo:"Matrix"},
+  update:{genero:"ciencia ficcion"}}
+)
+
+db.media.updateOne(
+  {titulo:"Java para todos"},
+  {$unset:{editorial:""}}
+)
+
+db.media.updateOne(
+  {titulo:"Java para todos"},
+  {
+    $addToSet: {Autor:"María Sancho"}
+  })
+
+db.media.updateOne(
+  {Titulo:"Matrix"},
+  {
+    $push: {actores:{$each:["Antonio Banderas","Brad Pitt"]}}
+  })
+
+db.media.updateOne(
+  {Titulo:"Matrix"},
+  {$unset:{Actores:""}})
+
+db.media.updateOne(
+  {Titulo:"Matrix"},
+  {$pop:{actores:1}})
+
+db.media.update(
+{
+    _id: ObjectId("5bd0d75083c8247b127673a0")},
+{$set:{    tipo: 'DVD',
+    Titulo: 'Matrix',
+    estreno: 1999,
+    actores: [
+      'Keanu Reeves',
+      'Carry-Anne Moss',
+      'Laurence Fishburne',
+      'Hugo Weaving',
+      'Gloria Foster',
+      'Joe Pantoliano'
+    ]
+  }})
+
+db.media.updateOne(
+  {Titulo:"Matrix"},
+  {$addToSet:{actores:{$each:[
+    "Joe Pantoliano",
+    "Natalie Portman",
+    "Brad Pitt"]}}})
+
+db.media.updateOne(
+  {Titulo:"Matrix"},
+  {$pop:{actores:-1,actores:1}})
+
+db.media.updateOne(
+  {Titulo:"Matrix"},
+  {$push:{actores:{$each:[
+    "Joe Pantoliano",
+    "Antonio Banderas",
+  ]}}})
+
+db.media.updateOne(
+  {Titulo:"Matrix"},
+  {$pullAll:{actores:[
+    "Joe Pantoliano",
+    "Antonio Banderas"]}})
+
+db.media.updateOne(
+  {Titulo:"Recuerdos"},
+  {
+    $push:{canciones:
+      {cancion:5,
+       titulo: "El atardecer",
+       longitud: "6:50"
+      }}
+  })
+
+db.media.updateOne(
+  {$and:[{Titulo:"Recuerdos"},{"canciones.cancion":5}]},
+  {$set: {"canciones.$.cancion":3}})
+
+db.media.findOneAndUpdate(
+  {Titulo:"Recuerdos"},
+  {$set:{Artista:"Los Piratillas"}},
+  {returnNewDocument:true}
+)
+
+db.multimedia.find()
+
+db.media.renameCollection('multimedia')
